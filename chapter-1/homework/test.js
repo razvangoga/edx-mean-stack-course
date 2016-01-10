@@ -1,8 +1,8 @@
 var assert = require('assert');
-var connect = require('./connect');
-var dbInterface = require('./interface');
+var connect = require('./connect.js');
+var dbInterface = require('./interface.js');
 var fs = require('fs');
-var movies = require('./movies');
+var movies = require('./movies.json');
 
 /**
  *  This test suite is meant to be run through gulp (use the `npm run watch`)
@@ -19,10 +19,11 @@ describe('dbInterface', function() {
    *  a document into the "movies" collection.
    */
   it('can insert a movie', function(done) {
-    var doc = { title: 'Rogue One', year: 2016, director: 'Gareth Edwards' };
+    var title = 'Rogue One';
+    var doc = { title: title, year: 2016, director: 'Gareth Edwards' };
     dbInterface.insert(db, doc, function(error) {
       assert.ifError(error);
-      db.collection('movies').count({ title: 'Rogue One' }, function(error, c) {
+      db.collection('movies').count({ title: title }, function(error, c) {
         assert.ifError(error);
         assert.equal(c, 1);
         done();
