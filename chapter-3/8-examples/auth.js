@@ -16,20 +16,21 @@ function setupAuth(User, app) {
   // Facebook-specific
   passport.use(new FacebookStrategy(
     {
-      clientID: process.env.FACEBOOK_CLIENT_ID,
-      clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+      clientID: '1678534515751405', //process.env.FACEBOOK_CLIENT_ID,
+      clientSecret: '2954d79c6c4bbc30adc109121fac9d3a', //process.env.FACEBOOK_CLIENT_SECRET,
       callbackURL: 'http://localhost:3000/auth/facebook/callback'
     },
     function(accessToken, refreshToken, profile, done) {
-      if (!profile.emails || !profile.emails.length) {
-        return done('No emails associated with this account!');
+      if (!profile.displayName) {
+         //changed from email because no meial fields was returned - irrelevant for course
+        return done('No display name associated with this account!' + JSON.stringify(profile));
       }
 
       User.findOneAndUpdate(
         { 'data.oauth': profile.id },
         {
           $set: {
-            'profile.username': profile.emails[0].value,
+            'profile.username': profile.displayName,
             'profile.picture': 'http://graph.facebook.com/' +
               profile.id.toString() + '/picture?type=large'
           }
