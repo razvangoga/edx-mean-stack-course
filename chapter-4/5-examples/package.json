@@ -1,5 +1,7 @@
 {
   "devDependencies": {
+    "chai" : "",
+    "mocha": "2.2.4",
     "karma": "0.12.16",
     "karma-chai": "0.1.0",
     "karma-chrome-launcher": "0.1.4",
