@@ -21,15 +21,19 @@ function setupAuth(User, Config, app) {
       callbackURL: 'http://localhost:3000/auth/facebook/callback'
     },
     function(accessToken, refreshToken, profile, done) {
-      if (!profile.emails || !profile.emails.length) {
-        return done('No emails associated with this account!');
+      //HACK : for some reason my test FB profile has no email - changed to displayName as it is irrelevant to this course what we use
+      //if (!profile.emails || !profile.emails.length) {
+      if(!profile.displayName) {
+        return done('No emails associated with this account!' + JSON.stringify(profile));
       }
 
       User.findOneAndUpdate(
         { 'data.oauth': profile.id },
         {
           $set: {
-            'profile.username': profile.emails[0].value,
+            //HACK : see above
+            //'profile.username': profile.emails[0].value,
+            'profile.username': profile.displayName,
             'profile.picture': 'http://graph.facebook.com/' +
               profile.id.toString() + '/picture?type=large'
           }
