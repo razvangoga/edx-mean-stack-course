@@ -39,12 +39,14 @@ describe('chapter 5 assessment', function() {
 
         var template = '<div><div ng-include="\'templates/tab-search.html\'"></div></div>';
         element = $compile(template)(scope);
+        
         scope.$apply();
       });
     });
 
     it('has the ion-view, ion-content, and search-bar directives', function(done) {
       scope.$on('SearchBarController', function() {
+     
         assert.equal(element.find('ion-view').length, 1);
         assert.equal(element.find('ion-view').attr('view-title'), 'Search');
         assert.equal(element.find('ion-view ion-content').length, 1);
