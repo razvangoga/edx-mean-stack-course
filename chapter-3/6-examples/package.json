@@ -2,7 +2,7 @@
   "dependencies": {
     "express": "4.12.3",
     "http-status": "0.1.8",
-    "mongoose": "4.0.3",
+    "mongoose": "5.8.1",
     "underscore": "1.5.2",
     "wagner-core": "0.1.0"
   },
